@@ -17,7 +17,7 @@ public class Config {
     public static String DB_USER;
     public static String DB_PWD;
 
-    public static void load() {
+    public static void loadConfig() {
 
         Properties botSettings = new Properties();
         try (InputStream stream = new FileInputStream(new File(CONFIGURATION_BOT_FILE))) {
