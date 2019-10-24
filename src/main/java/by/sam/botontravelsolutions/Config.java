@@ -29,7 +29,7 @@ public class Config {
 
         Properties dbSettings = new Properties();
         try (InputStream stream = new FileInputStream(new File(CONFIGURATION_DB_FILE))) {
-            botSettings.load(stream);
+            dbSettings.load(stream);
             System.out.println("Конфигурация Базы Данных загружена успешно.");
         } catch (IOException e){
             System.out.println("Ошбика загрузки конфигурации Базы Данных.");
