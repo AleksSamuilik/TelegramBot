@@ -36,7 +36,7 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        String answer = "";
+        String answer;
 
         if (message != null && message.hasText()) {
             String command = message.getText().trim();
@@ -56,6 +56,7 @@ public class Bot extends TelegramLongPollingBot {
                 sendMsg(message, answer);
 
             } else if (opertaionMap.containsKey(command)) {
+
                 if (atrib != " ") {
                     opertaionMap.get(command).setAttribute(atrib);
                     answer=opertaionMap.get(command).getOperation();

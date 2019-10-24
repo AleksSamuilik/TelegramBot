@@ -5,9 +5,9 @@ import java.sql.*;
 public class CityProvider implements OpertaionProvider, RequestProvider {
     private String nameCity;
     private ResultSet rs;
-    private  String name;
-    private  int year;
-    private  String description;
+    private String name;
+    private int year;
+    private String description;
 
 
     @Override
@@ -17,6 +17,12 @@ public class CityProvider implements OpertaionProvider, RequestProvider {
 
     @Override
     public String getOperation() {
+        name = null;
+        year = 0;
+        description = null;
+
+        //clear field return data
+
         String description = requestDB(nameCity);
         if (name != null) {
             return description;
