@@ -22,17 +22,17 @@ public class Config {
         Properties botSettings = new Properties();
         try (InputStream stream = new FileInputStream(new File(CONFIGURATION_BOT_FILE))) {
             botSettings.load(stream);
-            System.out.println("Конфигурация бота загружена успешно.");
-        } catch (IOException e){
-            System.out.println("Ошбика загрузки конфигурации бота.");
+            System.out.println("Bot configuration loaded successfully.");
+        } catch (IOException e) {
+            System.out.println("The boot configuration boot error.");
         }
 
         Properties dbSettings = new Properties();
         try (InputStream stream = new FileInputStream(new File(CONFIGURATION_DB_FILE))) {
             dbSettings.load(stream);
-            System.out.println("Конфигурация Базы Данных загружена успешно.");
-        } catch (IOException e){
-            System.out.println("Ошбика загрузки конфигурации Базы Данных.");
+            System.out.println("Database configuration loaded successfully.");
+        } catch (IOException e) {
+            System.out.println("Database upload configuration error.");
         }
 
         BOT_NAME = botSettings.getProperty("BotName");
@@ -40,6 +40,6 @@ public class Config {
 
         DB_URL = dbSettings.getProperty("DbUrl");
         DB_USER = dbSettings.getProperty("DbUser");
-        DB_PWD=dbSettings.getProperty("DbPwd");
+        DB_PWD = dbSettings.getProperty("DbPwd");
     }
 }
