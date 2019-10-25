@@ -2,30 +2,22 @@ package by.sam.botontravelsolutions;
 
 import java.sql.*;
 
-public class CityProvider implements OpertaionProvider, RequestProvider {
+public class CityProvider implements CommandProvider {
+
     private String nameCity;
-    private ResultSet rs;
-    private String name;
-    private int year;
-    private String description;
+    private boolean isSuchCity;
 
 
     @Override
-    public String getNameOperation() {
+    public String getNameCommand() {
         return "/city";
     }
 
     @Override
-    public String getOperation() {
-        name = null;
-        year = 0;
-        description = null;
-
-        //clear field return data
-
-        String description = requestDB(nameCity);
-        if (name != null) {
-            return description;
+    public String executeCommand() {
+        String descriptionCity = findCity(nameCity);
+        if (isSuchCity){
+            return descriptionCity;
         } else {
             return "I don’t have such a city.";
         }
@@ -37,29 +29,31 @@ public class CityProvider implements OpertaionProvider, RequestProvider {
     }
 
     @Override
-    public String getOperationDescription() {
+    public String getDescriptionCommand() {
         return "Get a description of the city. Like this, for example: /city Minsk";
     }
 
-    @Override
-    public String requestDB(String city) {
-        String query = "SELECT * FROM City WHERE Name='" + city + "'";
-        Statement stmt;
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7309426", "sql7309426", "Pf3yT4C76b")) {
+
+    public String findCity(String city) {
+        String query = "SELECT * FROM City WHERE Name= ?";
+        PreparedStatement stmt;
+        String name="";
+        int year=0;
+        String description="";
+        try (Connection connection = DriverManager.getConnection(Config.DB_URL, Config.DB_USER, Config.DB_PWD)) {
             System.out.println("Database connected!");
-            stmt = connection.createStatement();
-            stmt.execute(query);
-            rs = stmt.executeQuery(query);
+            stmt = connection.prepareStatement(query);
+            stmt.setString(1,city);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 year = rs.getInt(2);
                 name = rs.getString(1);
                 description = rs.getString(3);
             }
+            isSuchCity = year!=0&&name!=null&&description!=null? true: false;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return name + " was created in " + year + ". " + description;
-
     }
 }

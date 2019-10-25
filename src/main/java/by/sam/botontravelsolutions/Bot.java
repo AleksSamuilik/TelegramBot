@@ -9,14 +9,12 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.util.*;
 
 public class Bot extends TelegramLongPollingBot {
-    private Map<String, OpertaionProvider> opertaionMap;
+    private Map<String, CommandProvider> commandMap;
 
     public Bot() {
-        opertaionMap = new HashMap<>();
-        PromoCode code = new PromoCode();
+        commandMap = new HashMap<>();
         CityProvider city = new CityProvider();
-        opertaionMap.put(code.getNameOperation(), code);
-        opertaionMap.put(city.getNameOperation(), city);
+        commandMap.put(city.getNameCommand(), city);
     }
 
 
@@ -55,18 +53,18 @@ public class Bot extends TelegramLongPollingBot {
                 System.out.println(answer);
                 sendMsg(message, answer);
 
-            } else if (opertaionMap.containsKey(command)) {
+            } else if (commandMap.containsKey(command)) {
 
                 if (atrib != " ") {
-                    opertaionMap.get(command).setAttribute(atrib);
-                    answer=opertaionMap.get(command).getOperation();
+                    commandMap.get(command).setAttribute(atrib);
+                    answer = commandMap.get(command).executeCommand();
                     System.out.println(answer);
                     sendMsg(message, answer);
                 } else {
-                    opertaionMap.get(command).setAttribute(message.getChat().getUserName());
-                    answer =  opertaionMap.get(command).getOperation();
+                    commandMap.get(command).setAttribute(message.getChat().getUserName());
+                    answer = commandMap.get(command).executeCommand();
                     System.out.println(answer);
-                    sendMsg(message,answer);
+                    sendMsg(message, answer);
                 }
             }
         } else {
@@ -77,8 +75,8 @@ public class Bot extends TelegramLongPollingBot {
 
     private String createDescriptionCommand() {
         StringBuilder builder = new StringBuilder();
-        for (OpertaionProvider provider : opertaionMap.values()) {
-            builder.append(provider.getNameOperation() + " " + provider.getOperationDescription() + "\n");
+        for (CommandProvider provider : commandMap.values()) {
+            builder.append(provider.getNameCommand() + " " + provider.getDescriptionCommand() + "\n");
         }
         return builder.toString();
     }
