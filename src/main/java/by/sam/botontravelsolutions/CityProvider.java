@@ -17,10 +17,15 @@ public class CityProvider implements CommandProvider {
     public String executeCommand() {
         String descriptionCity = findCity(nameCity);
         if (isSuchCity){
+            getStay();
             return descriptionCity;
         } else {
             return "I don’t have such a city.";
         }
+    }
+
+    private void getStay() {
+        
     }
 
     @Override
