@@ -41,5 +41,7 @@ public class Config {
         DB_URL = dbSettings.getProperty("DbUrl");
         DB_USER = dbSettings.getProperty("DbUser");
         DB_PWD = dbSettings.getProperty("DbPwd");
+        DB_PWD = dbSettings.getProperty("DbPwd2");
+        DB_PWD = dbSettings.getProperty("DbPwd3");
     }
 }
