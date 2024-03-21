@@ -25,7 +25,7 @@ public class CityProvider implements CommandProvider {
     }
 
     private void getStay() {
-        
+
     }
 
     @Override

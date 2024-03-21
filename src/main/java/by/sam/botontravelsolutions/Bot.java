@@ -52,6 +52,13 @@ public class Bot extends TelegramLongPollingBot {
                 answer = "I can help you search city of dream.\n" + descriptionCommand;
                 System.out.println(answer);
                 sendMsg(message, answer);
+            }
+
+            if (command.equals("/del")) {
+                String delCommand = createDelCommand();
+                answer = "I dell";
+                System.out.println(answer);
+                sendMsg(message, answer);
 
             } else if (commandMap.containsKey(command)) {
 
@@ -71,6 +78,14 @@ public class Bot extends TelegramLongPollingBot {
             return;
         }
 
+    }
+
+    private String createDelCommand() {
+        StringBuilder builder = new StringBuilder();
+        for (CommandProvider provider : commandMap.values()) {
+            builder.append(provider.getNameCommand() + " " + provider.getDescriptionCommand() + "\n");
+        }
+        return builder.toString();
     }
 
     private String createDescriptionCommand() {
